@@ -12,6 +12,25 @@
 */
 
 
+//CREAR NUEVOS CONTACTOS
+Route::get('/api/contactos2/{name}/{phone}', function ($name, $phone){
+
+	//return $request->all();
+
+	//Implementa aqui la logica de guardar en la DB usando tu modelo
+
+	$object = App\Agenda::create(['nombre' => $name,'telefono' => $phone]);
+	return $object;
+
+	//$object = new App\Agenda;
+	//$object->nombre = $name;
+	//$object->telefono = $phone;
+	//$object->save();
+
+	//return $object;
+});
+
+
 Route::get('/api/agenda/{nombre}/{telefono}', 'AgendaController@guardar');
 Route::get('/api/agenda','AgendaController@create');
 Route::post('/api/agenda','AgendaController@store');
@@ -23,9 +42,12 @@ Nuestras rutas de la API REST
 */
 
 //OBTENER TODOS  LOS CONTACTOS
-Route::get('/api/contacto', function(){
+Route::get('/api/contactos', function(){
 
-	return App\Agenda::all();
+	//return App\Agenda::all();
+	$datos = [];
+	$datos["contactos"] = App\Agenda::all();
+	return $datos;
 
 });
 
@@ -52,9 +74,3 @@ Route::get('/api/contactos/email/{email}', function($email)
 });
 
 
-//CREAR NUEVOS CONTACTOS
-Route::post('/api/contactos', function (Request $request){
-
-	return App\Agenda::create($request->all());
-
-});
